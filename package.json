@@ -17,6 +17,11 @@
   "engines": {
     "node": ">=18"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/claudefanclaudefan/raportagent-mcp"
+  },
+  "homepage": "https://raportagent.com/mcp",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
     "zod": "^3.23.8"
