@@ -1,6 +1,7 @@
 {
   "name": "@raportagent/mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.raportagent/raportagent-mcp",
   "description": "Model Context Protocol server for RaportAgent — generate sourced market & compliance research from any MCP client (Claude Desktop, Claude Code, Cursor).",
   "type": "module",
   "bin": {
