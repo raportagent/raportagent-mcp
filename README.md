@@ -12,7 +12,7 @@ credit model, and the audit trail unchanged.
 
 | Tool | What it does |
 |------|--------------|
-| `generate_report` | Start a report (`query`, `depth`, optional `template: compliance` for a legal/regulatory brief). Returns a `report_id`; optionally polls with `wait_seconds`. Costs 1 credit. |
+| `generate_report` | Start a report (`query`, `depth`, optional `template`: compliance/pitch/saas/ecommerce/realestate/local/battlecard/duediligence/fintech). Returns a `report_id`; optionally polls with `wait_seconds`. Costs 1 credit (2 for `battlecard`). |
 | `get_report_status` | queued / running / completed / failed |
 | `get_report` | The finished report's full markdown + sections |
 | `get_report_audit` | Provenance: AI models, agents, source counts, SHA-256 of the exact content |
