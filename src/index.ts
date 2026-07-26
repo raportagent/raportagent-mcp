@@ -100,7 +100,7 @@ server.tool(
     while (Date.now() < deadline) {
       await new Promise((r) => setTimeout(r, 15000));
       const st = await api(`/v1/reports/${rid}/status`);
-      if (st.ok && (st.data.status === "completed" || st.data.status === "failed")) {
+      if (st.ok && ["completed", "failed", "cancelled"].includes(st.data.status)) {
         return jsonBlock({ ...created.data, final_status: st.data });
       }
     }
@@ -110,7 +110,7 @@ server.tool(
 
 server.tool(
   "get_report_status",
-  "Check whether a report is queued, running, completed, or failed.",
+  "Check whether a report is queued, in_progress, completed, failed, or cancelled.",
   { report_id: z.string().describe("The rep_… id from generate_report.") },
   async ({ report_id }) => {
     const r = await api(`/v1/reports/${report_id}/status`);
@@ -167,7 +167,7 @@ server.tool(
   "List your recent reports (most recent first).",
   {
     limit: z.number().int().min(1).max(100).default(20),
-    status: z.enum(["queued", "running", "completed", "failed"]).optional(),
+    status: z.enum(["queued", "in_progress", "completed", "failed", "cancelled"]).optional(),
   },
   async ({ limit, status }) => {
     const qs = new URLSearchParams({ limit: String(limit) });
