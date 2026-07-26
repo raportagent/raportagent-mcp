@@ -69,7 +69,8 @@ const server = new McpServer({ name: "raportagent", version: PKG_VERSION });
 
 server.tool(
   "generate_report",
-  "Start a RaportAgent market/compliance research report. Generation takes ~7–15 min, so this " +
+  "Start a RaportAgent market/compliance research report. Typically takes ~7 min ('fast') or " +
+    "~15 min ('deep'), occasionally longer under load (hard timeout: 20 min fast / 45 min deep), so this " +
     "returns a report_id immediately (status: queued) unless you set wait_seconds. Use " +
     "get_report_status to poll, then get_report to fetch the finished markdown. Costs 1 credit " +
     "(2 credits for the 'battlecard' template).",
@@ -81,8 +82,9 @@ server.tool(
       "comparison (costs 2 credits instead of 1), 'duediligence' = investor-style scoped review, " +
       "'pitch'/'saas'/'ecommerce'/'realestate'/'local'/'fintech' = industry-tuned framing. Omit for a general report.",
     ),
-    wait_seconds: z.number().int().min(0).max(1200).default(0)
-      .describe("If >0, poll until the report completes or this many seconds elapse (max 1200)."),
+    wait_seconds: z.number().int().min(0).max(2700).default(0)
+      .describe("If >0, poll until the report completes or this many seconds elapse (max 2700, " +
+        "matching the server's hard timeout for 'deep' mode; 'fast' mode times out at 1200)."),
   },
   async ({ query, depth, template, wait_seconds }) => {
     const options: Record<string, unknown> = { depth };
