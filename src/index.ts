@@ -14,6 +14,11 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import { createRequire } from "node:module";
+
+// Read the version from package.json at runtime instead of hardcoding it a second time,
+// so the MCP handshake (serverInfo.version) can never drift from what's actually published.
+const { version: PKG_VERSION } = createRequire(import.meta.url)("../package.json") as { version: string };
 
 const BASE = (process.env.RAPORTAGENT_BASE_URL || process.env.REPORTAGENT_BASE_URL || "https://raportagent.com").replace(/\/+$/, "");
 const API_KEY = process.env.RAPORTAGENT_API_KEY || process.env.REPORTAGENT_API_KEY || "";
@@ -60,7 +65,7 @@ function errBlock(r: ApiResult) {
   return { content: [{ type: "text" as const, text: `RaportAgent API error (${r.status}): ${msg}` }], isError: true };
 }
 
-const server = new McpServer({ name: "raportagent", version: "0.1.0" });
+const server = new McpServer({ name: "raportagent", version: PKG_VERSION });
 
 server.tool(
   "generate_report",
