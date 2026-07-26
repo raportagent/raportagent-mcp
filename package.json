@@ -1,0 +1,29 @@
+{
+  "name": "@raportagent/mcp",
+  "version": "0.1.0",
+  "description": "Model Context Protocol server for RaportAgent — generate sourced market & compliance research from any MCP client (Claude Desktop, Claude Code, Cursor).",
+  "type": "module",
+  "bin": {
+    "raportagent-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^20.14.0"
+  },
+  "license": "MIT"
+}
