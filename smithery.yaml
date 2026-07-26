@@ -1,0 +1,22 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - raportagentApiKey
+    properties:
+      raportagentApiKey:
+        type: string
+        description: Your RaportAgent API key (create one at raportagent.com under My account -> API keys)
+      raportagentBaseUrl:
+        type: string
+        description: Override the API base URL (defaults to https://raportagent.com)
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: ['-y', '@raportagent/mcp'],
+      env: Object.assign(
+        { RAPORTAGENT_API_KEY: config.raportagentApiKey },
+        config.raportagentBaseUrl ? { RAPORTAGENT_BASE_URL: config.raportagentBaseUrl } : {}
+      )
+    })
