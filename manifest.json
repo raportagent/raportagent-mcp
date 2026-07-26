@@ -1,7 +1,7 @@
 {
   "manifest_version": "0.2",
   "name": "raportagent-mcp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Sourced market and compliance research for Claude Desktop, Claude Code and Cursor.",
   "author": {
     "name": "RaportAgent",
