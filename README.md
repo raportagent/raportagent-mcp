@@ -16,6 +16,8 @@ credit model, and the audit trail unchanged.
 | `get_report_status` | queued / running / completed / failed |
 | `get_report` | The finished report's full markdown + sections |
 | `get_report_audit` | Provenance: AI models, agents, source counts, SHA-256 of the exact content |
+| `get_report_sources` | Every cited source with link-health counts (working / uncertain / dead) |
+| `cancel_report` | Cancel a queued/in-progress report and refund its credit |
 | `list_reports` | Your recent reports |
 | `get_account` | Remaining credits and plan |
 

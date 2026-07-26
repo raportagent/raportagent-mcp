@@ -135,6 +135,29 @@ server.tool(
 );
 
 server.tool(
+  "get_report_sources",
+  "List every source cited in a report with link-health counts (working / uncertain / dead) and " +
+    "how many are actually cited inline. Use this to decide whether a report is trustworthy enough " +
+    "to act on, or whether to regenerate it.",
+  { report_id: z.string().describe("The rep_… id.") },
+  async ({ report_id }) => {
+    const r = await api(`/v1/reports/${report_id}/sources`);
+    return r.ok ? jsonBlock(r.data) : errBlock(r);
+  },
+);
+
+server.tool(
+  "cancel_report",
+  "Cancel a report that is still queued or in progress and refund its credit. Fails if the report " +
+    "has already completed or failed (nothing to cancel at that point).",
+  { report_id: z.string().describe("The rep_… id.") },
+  async ({ report_id }) => {
+    const r = await api(`/v1/reports/${report_id}`, { method: "DELETE" });
+    return r.ok ? jsonBlock(r.data) : errBlock(r);
+  },
+);
+
+server.tool(
   "list_reports",
   "List your recent reports (most recent first).",
   {
