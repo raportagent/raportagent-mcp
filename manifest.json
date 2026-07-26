@@ -1,0 +1,38 @@
+{
+  "manifest_version": "0.2",
+  "name": "raportagent-mcp",
+  "version": "0.1.2",
+  "description": "Sourced market and compliance research for Claude Desktop, Claude Code and Cursor.",
+  "author": {
+    "name": "RaportAgent",
+    "url": "https://raportagent.com"
+  },
+  "homepage": "https://raportagent.com/mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raportagent/raportagent-mcp"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/index.js"
+      ],
+      "env": {
+        "RAPORTAGENT_API_KEY": "${user_config.raportagent_api_key}"
+      }
+    }
+  },
+  "user_config": {
+    "raportagent_api_key": {
+      "type": "string",
+      "title": "RaportAgent API key",
+      "description": "Create one at raportagent.com under My account -> API keys",
+      "required": true,
+      "sensitive": true
+    }
+  },
+  "license": "MIT"
+}
