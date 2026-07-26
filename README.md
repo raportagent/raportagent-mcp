@@ -56,7 +56,7 @@ Same `command`/`args`/`env` shape as Claude Desktop above, under Cursor's MCP se
 ### Running from source (contributing / debugging only)
 
 ```bash
-git clone <this repo>
+git clone https://github.com/raportagent/raportagent-mcp.git
 cd mcp-server
 npm install
 npm run build
