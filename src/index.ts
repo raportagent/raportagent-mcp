@@ -23,7 +23,7 @@ const { version: PKG_VERSION } = createRequire(import.meta.url)("../package.json
 const BASE = (process.env.RAPORTAGENT_BASE_URL || process.env.REPORTAGENT_BASE_URL || "https://raportagent.com").replace(/\/+$/, "");
 const API_KEY = process.env.RAPORTAGENT_API_KEY || process.env.REPORTAGENT_API_KEY || "";
 
-const TEMPLATES = ["compliance", "pitch", "saas", "ecommerce", "realestate", "local"] as const;
+const TEMPLATES = ["compliance", "pitch", "saas", "ecommerce", "realestate", "local", "battlecard", "duediligence", "fintech"] as const;
 
 type ApiResult = { ok: boolean; status: number; data: any };
 
@@ -71,11 +71,16 @@ server.tool(
   "generate_report",
   "Start a RaportAgent market/compliance research report. Generation takes ~7–15 min, so this " +
     "returns a report_id immediately (status: queued) unless you set wait_seconds. Use " +
-    "get_report_status to poll, then get_report to fetch the finished markdown. Each report costs 1 credit.",
+    "get_report_status to poll, then get_report to fetch the finished markdown. Costs 1 credit " +
+    "(2 credits for the 'battlecard' template).",
   {
     query: z.string().min(3).describe("The market/topic to research, e.g. 'EV charging infrastructure Europe 2026'."),
     depth: z.enum(["deep", "fast"]).default("deep").describe("deep = ~15 min, thorough; fast = ~7 min."),
-    template: z.enum(TEMPLATES).optional().describe("Report shape. Use 'compliance' for a legal/regulatory brief."),
+    template: z.enum(TEMPLATES).optional().describe(
+      "Report shape. 'compliance' = legal/regulatory brief, 'battlecard' = head-to-head competitor " +
+      "comparison (costs 2 credits instead of 1), 'duediligence' = investor-style scoped review, " +
+      "'pitch'/'saas'/'ecommerce'/'realestate'/'local'/'fintech' = industry-tuned framing. Omit for a general report.",
+    ),
     wait_seconds: z.number().int().min(0).max(1200).default(0)
       .describe("If >0, poll until the report completes or this many seconds elapse (max 1200)."),
   },
